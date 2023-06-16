@@ -1,0 +1,21 @@
+[
+  {
+    "name": "exii-insight",
+    "image": "${repository_url}:latest",
+    "dnsSearchDomains": [],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "secretOptions": [],
+      "options": {
+        "awslogs-group": "${logs_group}",
+        "awslogs-region": "${region_name}",
+        "awslogs-stream-prefix": "exii"
+      }
+    },
+    "entryPoint": [],
+    "linuxParameters": null,
+    "cpu": 0,
+    "environment": [
+    ],
+  }
+]

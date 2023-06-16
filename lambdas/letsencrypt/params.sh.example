@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export HOSTED_ZONE_ID={{HostedZoneId}}
+export LETSENCRYPT_DOMAINS={{HostedZoneDomainName}},{{BackendDomainPrefix}}.{{HostedZoneDomainName}}
+export LETSENCRYPT_EMAIL={{LetsEncryptEmail}}

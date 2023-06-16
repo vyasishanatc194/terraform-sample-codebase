@@ -1,0 +1,4 @@
+certbot==0.37.2
+certbot-dns-route53==0.37.2
+boto3 #no-deploy
+botocore #no-deploy

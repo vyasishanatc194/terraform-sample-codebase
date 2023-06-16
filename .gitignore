@@ -1,0 +1,4 @@
+.terraform
+.venv
+.serverless
+node_modules

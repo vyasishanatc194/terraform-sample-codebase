@@ -1,0 +1,175 @@
+[
+  {
+    "name": "exii-django",
+    "image": "${repository_url}:latest",
+    "dnsSearchDomains": [],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "secretOptions": [],
+      "options": {
+        "awslogs-group": "${logs_group}",
+        "awslogs-region": "${region_name}",
+        "awslogs-stream-prefix": "exii-django"
+      }
+    },
+    "entryPoint": [],
+    "portMappings": [
+      {
+        "hostPort": 80,
+        "protocol": "tcp",
+        "containerPort": 80
+      }
+    ],
+    "command": [],
+    "linuxParameters": null,
+    "cpu": 0,
+    "environment": [
+      {
+        "name": "DJANGO_ALLOWED_CIDR_NETS",
+        "value": "${django_allowed_cidr_nets}"
+      },
+      {
+        "name": "DJANGO_BACKEND_DOMAIN_PREFIX",
+        "value": "${django_backend_domain_prefix}"
+      },
+      {
+        "name": "DJANGO_FRONTEND_DOMAIN_PREFIX",
+        "value": "${django_frontend_domain_prefix}"
+      },
+      {
+        "name": "DJANGO_COMMIT_HASH",
+        "value": "${django_commit_hash}"
+      },
+      {
+        "name": "DJANGO_DATABASE_HOST",
+        "value": "${django_database_host}"
+      },
+      {
+        "name": "DJANGO_DATABASE_NAME",
+        "value": "${django_database_name}"
+      },
+      {
+        "name": "DJANGO_DATABASE_PORT",
+        "value": "${django_database_port}"
+      },
+      {
+        "name": "DJANGO_DATABASE_USER",
+        "value": "${django_database_user}"
+      },
+      {
+        "name": "DJANGO_AWS_STORAGE_BUCKET_NAME",
+        "value": "${django_aws_storage_bucket_name}"
+      },
+      {
+        "name": "EXII_BASE_DOMAIN",
+        "value": "${exii_base_domain}"
+      },
+      {
+        "name": "STRIPE_SQS_ONBOARD_NAME",
+        "value": "${stripe_sqs_onboard_name}"
+      },
+      {
+        "name": "FRONTEND_BASE_URL",
+        "value": "${frontend_base_url}"
+      },
+      {
+        "name": "XERO_SQS_ONBOARD_NAME",
+        "value": "${xero_sqs_onboard_name}"
+      },
+      {
+        "name": "XERO_VERIFY_CALLBACK_URL",
+        "value": "${xero_verify_callback_url}"
+      },
+      {
+        "name": "GOOGLEANALYTICS_SQS_ONBOARD_NAME",
+        "value": "${google_analytics_sqs_onboard_name}"
+      },
+      {
+        "name": "GOOGLEADS_SQS_ONBOARD_NAME",
+        "value": "${google_ads_sqs_onboard_name}"
+      },
+      {
+        "name": "FACEBOOK_SQS_ONBOARD_NAME",
+        "value": "${facebook_sqs_onboard_name}"
+      },
+      {
+        "name": "SHOPIFY_SQS_ONBOARD_NAME",
+        "value": "${shopify_sqs_onboard_name}"
+      },
+      {
+        "name": "ENGINE_SQS_NAME",
+        "value": "${engine_sqs_name}"
+      }
+    ],
+    "secrets": [
+      {
+        "name": "DJANGO_SECRET_KEY",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/django/secret-key"
+      },
+      {
+        "name": "DJANGO_DATABASE_PASSWORD",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/database/password"
+      },
+      {
+        "name": "DJANGO_EMAIL_HOST_PASSWORD",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/backend/email-host-password"
+      },
+      {
+        "name": "ADMIN_SHARED_SECRET",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/backend/admin-shared-secret"
+      },
+      {
+        "name": "WORKER_SHARED_SECRET",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/backend/worker-shared-secret"
+      },
+      {
+        "name": "CRON_SHARED_SECRET",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/backend/cron-shared-secret"
+      },
+      {
+        "name": "ENGINE_SHARED_SECRET",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/backend/engine-shared-secret"
+      },
+      {
+        "name": "SENDGRID_API_KEY",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/backend/sendgrid_api_key"
+      },
+      {
+        "name": "GOOGLE_ANALYTICS_CLIENT_ID",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/google-analytics/client-id"
+      },
+      {
+        "name": "GOOGLE_ANALYTICS_CLIENT_SECRET",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/google-analytics/client-secret"
+      },
+      {
+        "name": "GOOGLE_ADS_CLIENT_ID",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/google-ads/client-id"
+      },
+      {
+        "name": "GOOGLE_ADS_CLIENT_SECRET",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/google-ads/client-secret"
+      },
+      {
+        "name": "GOOGLE_ADS_DEVELOPER_TOKEN",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/google-ads/developer-token"
+      },
+      {
+        "name": "FACEBOOK_APP_ID",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/facebook-ads/app-id"
+      },
+      {
+        "name": "FACEBOOK_APP_SECRET",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/facebook-ads/app-secret"
+      },
+      {
+        "name": "SHOPIFY_API_KEY",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/shopify/api-key"
+      },
+      {
+        "name": "SHOPIFY_API_SECRET_KEY",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/shopify/api-secret-key"
+      }
+    ]
+  }
+]

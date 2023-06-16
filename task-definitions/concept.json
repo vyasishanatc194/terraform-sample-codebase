@@ -1,0 +1,60 @@
+[
+  {
+    "name": "exii-concept",
+    "image": "${repository_url}:latest",
+    "dnsSearchDomains": [],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "secretOptions": [],
+      "options": {
+        "awslogs-group": "${logs_group}",
+        "awslogs-region": "${region_name}",
+        "awslogs-stream-prefix": "exii-concept"
+      }
+    },
+    "entryPoint": [],
+    "portMappings": [
+      {
+        "hostPort": 80,
+        "protocol": "tcp",
+        "containerPort": 80
+      }
+    ],
+    "command": [],
+    "linuxParameters": null,
+    "cpu": 0,
+    "environment": [
+        {
+          "name": "DATABASE_HOST",
+          "value": "${database_host}"
+        },
+        {
+          "name": "DATABASE_NAME",
+          "value": "${database_name}"
+        },
+        {
+          "name": "DATABASE_PORT",
+          "value": "${database_port}"
+        },
+        {
+          "name": "DATABASE_USER",
+          "value": "${database_user}"
+        },
+        {
+          "name": "BACKEND_SITE_URL",
+          "value": "${backend_site_url}"
+        },
+        {
+          "name": "XERO_VERIFY_CALLBACK_URL",
+          "value": "${xero_verify_callback_url}"
+        }
+    ],
+    "secrets": [
+      {
+        "name": "DATABASE_PASSWORD",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/database/password"
+      }
+    ]
+  }
+]
+

@@ -1,0 +1,10 @@
+variable "name" {}
+variable "desiderable_count" {}
+variable "execution_role" {}
+variable "task_role" {}
+variable "cluster_id" {}
+variable "vpc" {}
+variable "target_arn" {}
+variable "container_definitions" {}
+variable "container_name" {}
+variable "tags" {}

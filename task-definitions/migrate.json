@@ -1,0 +1,91 @@
+[
+  {
+    "name": "exii-migrate",
+    "image": "${repository_url}:latest",
+    "dnsSearchDomains": [],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "secretOptions": [],
+      "options": {
+        "awslogs-group": "${logs_group}",
+        "awslogs-region": "${region_name}",
+        "awslogs-stream-prefix": "exii"
+      }
+    },
+    "entryPoint": [],
+    "portMappings": [
+      {
+        "hostPort": 80,
+        "protocol": "tcp",
+        "containerPort": 80
+      }
+    ],
+    "command": [
+          "/bin/sh",
+          "-c",
+          "python manage.py migrate && python manage.py createcachetable"
+    ],
+    "linuxParameters": null,
+    "cpu": 0,
+    "environment": [
+      {
+        "name": "DJANGO_ALLOWED_CIDR_NETS",
+        "value": "${django_allowed_cidr_nets}"
+      },
+      {
+        "name": "DJANGO_BACKEND_DOMAIN_PREFIX",
+        "value": "${django_backend_domain_prefix}"
+      },
+      {
+        "name": "DJANGO_COMMIT_HASH",
+        "value": "${django_commit_hash}"
+      },
+      {
+        "name": "DJANGO_DATABASE_HOST",
+        "value": "${django_database_host}"
+      },
+      {
+        "name": "DJANGO_DATABASE_NAME",
+        "value": "${django_database_name}"
+      },
+      {
+        "name": "DJANGO_DATABASE_PORT",
+        "value": "${django_database_port}"
+      },
+      {
+        "name": "DJANGO_DATABASE_USER",
+        "value": "${django_database_user}"
+      },
+      {
+        "name": "EXII_BASE_DOMAIN",
+        "value": "${exii_base_domain}"
+      }
+    ],
+    "secrets": [
+      {
+        "name": "DJANGO_SECRET_KEY",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/django/secret-key"
+      },
+      {
+        "name": "DJANGO_DATABASE_PASSWORD",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/database/password"
+      },
+      {
+        "name": "DJANGO_EMAIL_HOST_PASSWORD",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/backend/email-host-password"
+      },
+      {
+        "name": "CODAT_API_KEY",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/codat/api-key"
+      },
+      {
+        "name": "ADMIN_SHARED_SECRET",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/backend/admin-shared-secret"
+      },
+      {
+        "name": "WORKER_SHARED_SECRET",
+        "valueFrom": "arn:aws:ssm:${region_name}:${account_id}:parameter/aws/reference/secretsmanager//exii/backend/worker-shared-secret"
+      }
+    ]
+  }
+]

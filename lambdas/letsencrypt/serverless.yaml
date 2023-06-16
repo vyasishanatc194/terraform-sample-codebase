@@ -1,0 +1,61 @@
+service: letsencrypt-exii
+
+provider:
+  name: aws
+  runtime: python3.7
+  profile: default
+  region: eu-west-2
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sns:Publish
+        - sns:CreateTopic
+      Resource:
+        Fn::Join: ["", ["arn:aws:sns:${self:provider.region}:", { "Ref": "AWS::AccountId" }, ":${self:resources.Resources.SNSTopic.Properties.TopicName}" ] ]
+    - Effect: Allow
+      Action:
+        - route53:ListHostedZones
+        - logs:PutLogEvents
+        - logs:CreateLogStream
+        - logs:CreateLogGroup
+        - cloudwatch:PutMetricData
+        - acm:ListCertificates
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - route53:GetChange
+        - route53:ChangeResourceRecordSets
+        - acm:ImportCertificate
+        - acm:DescribeCertificate
+      Resource: "*"
+
+functions:
+  cron-letsencrypt-trigger:
+    handler: main.handler
+    timeout: 300
+    events:
+      - schedule: cron(0 12 * * ? *)
+    environment:
+      LETSENCRYPT_DOMAINS: ${env:LETSENCRYPT_DOMAINS}
+      LETSENCRYPT_EMAIL: ${env:LETSENCRYPT_EMAIL}
+      NOTIFICATION_SNS_TOPIC: ${self:resources.Resources.SNSTopic.Properties.TopicName}
+
+resources:
+  Resources:
+    SNSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: SNS Topic
+        TopicName: ${self:service}-${self:provider.stage}-topic
+
+
+custom:
+  pythonRequirements:
+    useDownloadCache: true
+    useStaticCache: false
+    dockerizePip: true
+    dockerSsh: true
+
+plugins:
+  - serverless-python-requirements
